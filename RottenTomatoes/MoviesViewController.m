@@ -8,14 +8,19 @@
 
 #import "MoviesViewController.h"
 #import "MoviesManager.h"
+#import "MovieTableCell.h"
+#import "MBProgressHUD.h"
 
 @interface MoviesViewController ()
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *networkErrorView;
 
 @end
 
 @implementation MoviesViewController
+
+static NSString *CellIdentifier = @"MovieTableCell";
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,11 +34,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    UINib *movieCellNib = [UINib nibWithNibName:CellIdentifier bundle:nil];
+    [self.tableView registerNib:movieCellNib forCellReuseIdentifier:CellIdentifier];
+    
+    self.networkErrorView.hidden = YES;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    [[MoviesManager instance] addDelegate:self];
-    [self.tableView reloadData];
+    MoviesManager *manager = [MoviesManager instance];
+    [manager addDelegate:self];
+    [manager fetchData];
+    
+    [self setupRefresh];
+}
+
+- (void)setupRefresh {
+    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+    self.refreshControl = refresh;
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,7 +65,6 @@
 #pragma mark - Table view methods
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"Getting number of rows in section");
     MoviesManager *manager = [MoviesManager instance];
     return [manager getMovieCount];
 }
@@ -54,15 +73,27 @@
     MoviesManager *manager = [MoviesManager instance];
     Movie *movie = [manager getMovieAtIndex:indexPath.row];
     
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text = movie.title;
+    MovieTableCell *cell = (MovieTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell.movie = movie;
+    
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 110;
 }
 
 #pragma mark - Movie Manager delegates
 
 - (void)dataDownloaded {
+    self.networkErrorView.hidden = YES;
     [self.tableView reloadData];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+- (void)requestFailed {
+    self.networkErrorView.hidden = NO;
 }
 
 @end

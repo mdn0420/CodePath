@@ -9,17 +9,18 @@
 #import "AppDelegate.h"
 #import "MoviesViewController.h"
 #import "MoviesManager.h"
+#import "TestViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    [[MoviesManager instance] fetchData];
+{    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     UINavigationController *nvc = [[UINavigationController alloc] init];
-    MoviesViewController *mvc = [[MoviesViewController alloc] init];
-    [nvc pushViewController:mvc animated:YES];
+    //MoviesViewController *mvc = [[MoviesViewController alloc] init];
+    TestViewController *test = [[TestViewController alloc] init];
+    [nvc pushViewController:test animated:YES];
     
     self.window.rootViewController = nvc;
     

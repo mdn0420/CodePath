@@ -12,6 +12,7 @@
 @protocol MovieManagerDelegate
 
 -(void)dataDownloaded;
+-(void)requestFailed;
 
 @end
 
