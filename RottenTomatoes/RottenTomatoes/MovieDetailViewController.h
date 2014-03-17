@@ -1,5 +1,5 @@
 //
-//  TestViewController.h
+//  MovieDetailViewController.h
 //  RottenTomatoes
 //
 //  Created by Minh Nguyen on 3/16/14.
@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MoviesManager.h"
+#import "Movie.h"
 
-@interface TestViewController : UITableViewController <MovieManagerDelegate>
+@interface MovieDetailViewController : UIViewController
+
+@property (nonatomic, strong) Movie *movie;
 
 @end

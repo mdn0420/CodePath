@@ -11,6 +11,8 @@
 
 @interface MovieTableCell ()
 
+@property (weak, nonatomic) IBOutlet UILabel *mpaaLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *thumbView;
 
@@ -36,8 +38,13 @@
 
 #pragma mark - Public methods
 - (void)setMovie:(Movie *)movie {
-    self.titleLabel.text = movie.title;    
-    [self.thumbView setImageWithURL: [NSURL URLWithString:movie.posterUrl]];
+    if(movie) {
+        self.titleLabel.text = movie.title;
+        self.scoreLabel.text = [NSString stringWithFormat:@"%d%%", movie.criticScore];
+        self.scoreLabel.textColor = [UIColor colorWithRed:1-(movie.criticScore/100.0f) green:movie.criticScore/100.0f blue:0 alpha:1];
+        self.mpaaLabel.text = movie.mpaaRating;
+        [self.thumbView setImageWithURL: [NSURL URLWithString:movie.thumbUrl]];
+    }
 }
 
 @end

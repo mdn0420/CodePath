@@ -10,7 +10,12 @@
 
 @interface Movie : NSObject
 
+@property (nonatomic) NSInteger rtId;
+@property (nonatomic) NSInteger criticScore;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *posterUrl;
+@property (nonatomic, strong) NSString *thumbUrl;
+@property (nonatomic, strong) NSString *profileUrl;
+@property (nonatomic, strong) NSString *synopsis;
+@property (nonatomic, strong) NSString *mpaaRating;
 
 @end

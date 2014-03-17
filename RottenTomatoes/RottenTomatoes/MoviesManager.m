@@ -14,7 +14,23 @@
 
 @property (nonatomic, strong, readwrite) NSMutableSet* delegates;
 
-- (void)buildMovieList: (NSArray *)rawList;
+@end
+
+@interface NSMutableArray (Shuffling)
+- (void)shuffle;
+@end
+@implementation NSMutableArray (Shuffling)
+
+- (void)shuffle
+{
+    NSUInteger count = [self count];
+    for (NSUInteger i = 0; i < count; ++i) {
+        // Select a random element between i and end of array to swap with.
+        NSInteger nElements = count - i;
+        NSInteger n = arc4random_uniform(nElements) + i;
+        [self exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+}
 
 @end
 
@@ -38,7 +54,6 @@ NSMutableArray * _movies;
 
 - (void)addDelegate: (id<MovieManagerDelegate>) delegate {
     [delegates addObject: delegate];
-    NSLog(@"Delegate added");
 }
 
 - (void)removeDelegate: (id<MovieManagerDelegate>) delegate {
@@ -53,18 +68,6 @@ NSMutableArray * _movies;
     return [super init];
 }
 
-- (void)fetchData {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:RT_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self buildMovieList:responseObject[@"movies"]];
-        
-        [self callDelegates:@"dataDownloaded"];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [self callDelegates:@"requestFailed"];
-    }];
-}
-
 - (void)buildMovieList: (NSArray *)rawList {
     if(_movies == nil) {
         _movies = [[NSMutableArray alloc] init];
@@ -73,13 +76,23 @@ NSMutableArray * _movies;
     Movie *movie;
     for(id rawMovie in rawList) {
         movie = [[Movie alloc] init];
+        movie.rtId = [rawMovie[@"id"] integerValue];
+        movie.criticScore = [rawMovie[@"ratings"][@"critics_score"] integerValue];
         movie.title = rawMovie[@"title"];
-        movie.posterUrl = rawMovie[@"posters"][@"thumbnail"];
+        movie.thumbUrl = rawMovie[@"posters"][@"thumbnail"];
+        movie.profileUrl = rawMovie[@"posters"][@"profile"];
+        movie.synopsis = rawMovie[@"synopsis"];
+        movie.mpaaRating = rawMovie[@"mpaa_rating"];
         [_movies addObject:movie];
     }
     
+    // just to keep it interesting
+    //[_movies shuffle];
+    
     NSLog(@"Done building movie list");
 }
+
+# pragma mark - Helper methods
 
 - (void)checkReachability {
     NSURL *baseURL = [NSURL URLWithString:BASE_RT_URL];
@@ -101,6 +114,7 @@ NSMutableArray * _movies;
     }];
 }
 
+
 - (void)callDelegates: (NSString *)selectorName {
     SEL selector = NSSelectorFromString(selectorName);
     for(NSObject *delegate in delegates) {
@@ -108,10 +122,36 @@ NSMutableArray * _movies;
     }
 }
 
+# pragma mark - Data request methods
+
+- (void)fetchData {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:RT_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self buildMovieList:responseObject[@"movies"]];
+        
+        [self callDelegates:@"dataDownloaded"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [self callDelegates:@"requestFailed"];
+    }];
+}
+
+- (void)fetchDetailedData {
+    
+}
+
+- (void)refreshData {
+    if(_movies) {
+        [_movies removeAllObjects];
+    }
+    
+    [self fetchData];
+}
+
 #pragma mark - Data methods
 
 - (BOOL)isLoaded {
-    return _movies != nil;
+    return _movies != nil && _movies.count > 0;
 }
 
 - (int)getMovieCount {
@@ -119,6 +159,12 @@ NSMutableArray * _movies;
 }
 
 - (Movie *)getMovieAtIndex: (int)index {
-    return [_movies objectAtIndex:index];
+    Movie *result;
+    if(index >= 0 && index < _movies.count) {
+        result = [_movies objectAtIndex:index];
+    } else {
+        NSLog(@"Invalid movie index %d", index);
+    }
+    return result;
 }
 @end

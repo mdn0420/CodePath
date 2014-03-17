@@ -20,6 +20,7 @@
 
 + (id)instance;
 - (void)fetchData;
+- (void)refreshData;
 - (int)getMovieCount;
 - (Movie *)getMovieAtIndex: (int)index;
 - (void)addDelegate: (id<MovieManagerDelegate>)delegate;

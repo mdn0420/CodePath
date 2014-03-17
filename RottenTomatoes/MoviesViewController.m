@@ -10,17 +10,19 @@
 #import "MoviesManager.h"
 #import "MovieTableCell.h"
 #import "MBProgressHUD.h"
+#import "MovieDetailViewController.h"
 
 @interface MoviesViewController ()
 
-//@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *networkErrorView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
 @implementation MoviesViewController
 
 static NSString *CellIdentifier = @"MovieTableCell";
+MovieDetailViewController *_detailView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,8 +36,8 @@ static NSString *CellIdentifier = @"MovieTableCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setTitle:@"Movies"];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     UINib *movieCellNib = [UINib nibWithNibName:CellIdentifier bundle:nil];
     [self.tableView registerNib:movieCellNib forCellReuseIdentifier:CellIdentifier];
     
@@ -53,7 +55,14 @@ static NSString *CellIdentifier = @"MovieTableCell";
 - (void)setupRefresh {
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
     refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
-    self.refreshControl = refresh;
+    [refresh addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refresh];
+}
+
+- (void)handleRefresh:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [[MoviesManager instance] refreshData];
+    [(UIRefreshControl *)sender endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +93,21 @@ static NSString *CellIdentifier = @"MovieTableCell";
     return 110;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MoviesManager *manager = [MoviesManager instance];
+    Movie *movie = [manager getMovieAtIndex:indexPath.row];
+    
+    if(movie == nil) {
+        return;
+    }
+    
+    if(_detailView == nil) {
+       _detailView =[[MovieDetailViewController alloc] init];
+    }
+    _detailView.movie = movie;
+    [self.navigationController pushViewController:_detailView animated:YES];    
+}
+
 #pragma mark - Movie Manager delegates
 
 - (void)dataDownloaded {
@@ -94,6 +118,7 @@ static NSString *CellIdentifier = @"MovieTableCell";
 
 - (void)requestFailed {
     self.networkErrorView.hidden = NO;
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 @end
