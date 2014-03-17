@@ -80,7 +80,7 @@ NSMutableArray * _movies;
         movie.criticScore = [rawMovie[@"ratings"][@"critics_score"] integerValue];
         movie.title = rawMovie[@"title"];
         movie.thumbUrl = rawMovie[@"posters"][@"thumbnail"];
-        movie.profileUrl = rawMovie[@"posters"][@"profile"];
+        movie.profileUrl = rawMovie[@"posters"][@"original"];
         movie.synopsis = rawMovie[@"synopsis"];
         movie.mpaaRating = rawMovie[@"mpaa_rating"];
         [_movies addObject:movie];

@@ -41,6 +41,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     self.movie = nil;
+    self.profileImageView.image = nil;
 }
 
 - (void)didReceiveMemoryWarning
