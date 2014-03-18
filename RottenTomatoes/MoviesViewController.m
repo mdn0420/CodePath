@@ -14,8 +14,8 @@
 
 @interface MoviesViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *networkErrorView;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *networkErrorView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 

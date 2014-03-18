@@ -16,24 +16,6 @@
 
 @end
 
-@interface NSMutableArray (Shuffling)
-- (void)shuffle;
-@end
-@implementation NSMutableArray (Shuffling)
-
-- (void)shuffle
-{
-    NSUInteger count = [self count];
-    for (NSUInteger i = 0; i < count; ++i) {
-        // Select a random element between i and end of array to swap with.
-        NSInteger nElements = count - i;
-        NSInteger n = arc4random_uniform(nElements) + i;
-        [self exchangeObjectAtIndex:i withObjectAtIndex:n];
-    }
-}
-
-@end
-
 @implementation MoviesManager
 
 @synthesize delegates;
@@ -85,9 +67,6 @@ NSMutableArray * _movies;
         movie.mpaaRating = rawMovie[@"mpaa_rating"];
         [_movies addObject:movie];
     }
-    
-    // just to keep it interesting
-    //[_movies shuffle];
     
     NSLog(@"Done building movie list");
 }

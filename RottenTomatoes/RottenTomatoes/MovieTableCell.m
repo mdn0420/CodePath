@@ -11,8 +11,8 @@
 
 @interface MovieTableCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *mpaaLabel;
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) IBOutlet UILabel *mpaaLabel;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *thumbView;
 
