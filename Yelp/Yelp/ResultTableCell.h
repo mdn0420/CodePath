@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ROBusiness.h"
 
 @interface ResultTableCell : UITableViewCell
+
+@property (nonatomic, strong) ROBusiness *business;
 
 @end

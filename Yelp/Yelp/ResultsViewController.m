@@ -8,12 +8,14 @@
 
 #import "ResultsViewController.h"
 #import "ResultTableCell.h"
+#import "YelpClient.h"
 
 @interface ResultsViewController ()
+
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UIButton *filterButton;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) YelpClient *client;
 
 @end
 
@@ -25,7 +27,8 @@ static NSString *CellIdentifier = @"ResultTableCell";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.client = [YelpClient instance];
+        [self.client addDelegate:self];
     }
     return self;
 }
@@ -41,6 +44,8 @@ static NSString *CellIdentifier = @"ResultTableCell";
     
     [self setupFilterButton];
     self.navigationItem.titleView = self.searchBar;
+    
+    [self.client searchWithTerm:@""];
 }
 
 - (void)setupFilterButton {
@@ -65,6 +70,10 @@ static NSString *CellIdentifier = @"ResultTableCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 - (void) onLeftButton {
     
 }
@@ -76,12 +85,21 @@ static NSString *CellIdentifier = @"ResultTableCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return [self.client getResultCount];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ResultTableCell *cell = (ResultTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ROBusiness *business = [self.client getBusinessAtIndex:indexPath.row];
+    if(business) {
+        cell.business = business;
+    }
     return cell;
+}
+
+#pragma mark - Yelp Client Delegate
+- (void)dataDownloaded {
+    [self.tableView reloadData];
 }
 
 @end
