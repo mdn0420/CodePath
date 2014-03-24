@@ -20,10 +20,12 @@
 
 + (id)instance;
 
+@property (nonatomic, strong) NSString *searchTerm;
+
 - (NSUInteger)getResultCount;
 - (ROBusiness *)getBusinessAtIndex:(NSUInteger) index;
 - (void)addDelegate: (id<YelpClientDelegate>)delegate;
 - (void)removeDelegate: (id<YelpClientDelegate>)delegate;
-- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term;
+- (AFHTTPRequestOperation *)runSearch;
 
 @end

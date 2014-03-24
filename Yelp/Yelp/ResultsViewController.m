@@ -56,7 +56,8 @@ static CGRect _defaultNameBounds; // Used to store default label height
 }
 
 - (void)runSearch {
-    [self.client searchWithTerm:self.searchBar.text];
+    self.client.searchTerm = self.searchBar.text;
+    [self.client runSearch];
 }
 
 - (void)setupFilterButton {

@@ -1,20 +1,18 @@
 //
-//  FilterSwitchCell.m
+//  FilterSelectCell.m
 //  Yelp
 //
 //  Created by Minh Nguyen on 3/23/14.
 //  Copyright (c) 2014 Minh Nguyen. All rights reserved.
 //
 
-#import "FilterSwitchCell.h"
+#import "FilterSelectCell.h"
 
-@interface FilterSwitchCell()
-
-@property (weak, nonatomic) IBOutlet UISwitch *switchView;
+@interface FilterSelectCell()
 
 @end
 
-@implementation FilterSwitchCell
+@implementation FilterSelectCell
 
 - (void)awakeFromNib
 {

@@ -31,6 +31,10 @@
 		75C1CF5318DF698B00441EEA /* ROSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF5218DF698B00441EEA /* ROSearchResults.m */; };
 		75C1CF5718DFB6F600441EEA /* FilterSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF5518DFB6F600441EEA /* FilterSwitchCell.m */; };
 		75C1CF5818DFB6F600441EEA /* FilterSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75C1CF5618DFB6F600441EEA /* FilterSwitchCell.xib */; };
+		75C1CF5C18DFF01700441EEA /* FilterSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF5A18DFF01700441EEA /* FilterSelectCell.m */; };
+		75C1CF5D18DFF01700441EEA /* FilterSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75C1CF5B18DFF01700441EEA /* FilterSelectCell.xib */; };
+		75C1CF6018E0012100441EEA /* FilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF5F18E0012100441EEA /* FilterCell.m */; };
+		75C1CF6218E0198D00441EEA /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C1CF6118E0198D00441EEA /* down_arrow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +84,12 @@
 		75C1CF5418DFB6F600441EEA /* FilterSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSwitchCell.h; sourceTree = "<group>"; };
 		75C1CF5518DFB6F600441EEA /* FilterSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSwitchCell.m; sourceTree = "<group>"; };
 		75C1CF5618DFB6F600441EEA /* FilterSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterSwitchCell.xib; sourceTree = "<group>"; };
+		75C1CF5918DFF01700441EEA /* FilterSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSelectCell.h; sourceTree = "<group>"; };
+		75C1CF5A18DFF01700441EEA /* FilterSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSelectCell.m; sourceTree = "<group>"; };
+		75C1CF5B18DFF01700441EEA /* FilterSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterSelectCell.xib; sourceTree = "<group>"; };
+		75C1CF5E18E0012100441EEA /* FilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterCell.h; sourceTree = "<group>"; };
+		75C1CF5F18E0012100441EEA /* FilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterCell.m; sourceTree = "<group>"; };
+		75C1CF6118E0198D00441EEA /* down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = down_arrow.png; path = ../down_arrow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +152,7 @@
 		7546DD2618DBCE85002580E1 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				75C1CF6318E019A400441EEA /* Assets */,
 				75C1CF4D18DD296D00441EEA /* Models */,
 				7546DD5518DBFD04002580E1 /* Views */,
 				7546DD4F18DBCEE8002580E1 /* ViewControllers */,
@@ -206,6 +217,11 @@
 				75C1CF5418DFB6F600441EEA /* FilterSwitchCell.h */,
 				75C1CF5518DFB6F600441EEA /* FilterSwitchCell.m */,
 				75C1CF5618DFB6F600441EEA /* FilterSwitchCell.xib */,
+				75C1CF5918DFF01700441EEA /* FilterSelectCell.h */,
+				75C1CF5A18DFF01700441EEA /* FilterSelectCell.m */,
+				75C1CF5B18DFF01700441EEA /* FilterSelectCell.xib */,
+				75C1CF5E18E0012100441EEA /* FilterCell.h */,
+				75C1CF5F18E0012100441EEA /* FilterCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -219,6 +235,14 @@
 				75C1CF5218DF698B00441EEA /* ROSearchResults.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		75C1CF6318E019A400441EEA /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				75C1CF6118E0198D00441EEA /* down_arrow.png */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +322,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C1CF6218E0198D00441EEA /* down_arrow.png in Resources */,
+				75C1CF5D18DFF01700441EEA /* FilterSelectCell.xib in Resources */,
 				75C1CF4918DC1AB900441EEA /* FilterViewController.xib in Resources */,
 				7546DD5418DBCF12002580E1 /* ResultsViewController.xib in Resources */,
 				7546DD2B18DBCE85002580E1 /* InfoPlist.strings in Resources */,
@@ -357,6 +383,7 @@
 			files = (
 				7546DD5318DBCF12002580E1 /* ResultsViewController.m in Sources */,
 				7546DD3118DBCE85002580E1 /* AppDelegate.m in Sources */,
+				75C1CF6018E0012100441EEA /* FilterCell.m in Sources */,
 				75C1CF4C18DD266A00441EEA /* YelpClient.m in Sources */,
 				75C1CF5018DD29D900441EEA /* ROBusiness.m in Sources */,
 				75C1CF4818DC1AB900441EEA /* FilterViewController.m in Sources */,
@@ -364,6 +391,7 @@
 				75C1CF5318DF698B00441EEA /* ROSearchResults.m in Sources */,
 				7546DD2D18DBCE85002580E1 /* main.m in Sources */,
 				7546DD5818DBFDEE002580E1 /* ResultTableCell.m in Sources */,
+				75C1CF5C18DFF01700441EEA /* FilterSelectCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

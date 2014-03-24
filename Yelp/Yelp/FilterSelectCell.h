@@ -1,5 +1,5 @@
 //
-//  FilterSwitchCell.h
+//  FilterSelectCell.h
 //  Yelp
 //
 //  Created by Minh Nguyen on 3/23/14.
@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "FilterCell.h"
 
-@interface FilterSwitchCell : FilterCell
+@interface FilterSelectCell : FilterCell
+
+@property (weak, nonatomic) IBOutlet UIImageView *downImage;
 
 @end

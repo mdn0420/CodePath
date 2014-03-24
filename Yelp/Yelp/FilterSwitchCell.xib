@@ -32,8 +32,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="nameLabel" destination="zeu-RE-d1W" id="WSF-Y4-kbE"/>
                 <outlet property="switchView" destination="bio-A9-jqC" id="nGb-2c-mTW"/>
-                <outlet property="titleLabel" destination="zeu-RE-d1W" id="ZmL-vM-l7s"/>
             </connections>
         </tableViewCell>
     </objects>
