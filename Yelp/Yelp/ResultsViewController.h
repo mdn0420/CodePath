@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "YelpClient.h"
 
-@interface ResultsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, YelpClientDelegate>
+@interface ResultsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, YelpClientDelegate>
 
 @end

@@ -47,10 +47,16 @@ static CGRect _defaultNameBounds; // Used to store default label height
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    self.searchBar.delegate = self;
+    
     [self setupFilterButton];
     self.navigationItem.titleView = self.searchBar;
     
-    [self.client searchWithTerm:@""];
+    [self runSearch];
+}
+
+- (void)runSearch {
+    [self.client searchWithTerm:self.searchBar.text];
 }
 
 - (void)setupFilterButton {
@@ -76,7 +82,13 @@ static CGRect _defaultNameBounds; // Used to store default label height
     [self.navigationController pushViewController:fvc animated:YES];
 }
 
-#pragma mark - Table view methods
+#pragma mark - Search Bar delegates
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self runSearch];
+    [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - Table view delegates
 - (ResultTableCell *)protoCell {
     if(!_protoCell) {
         _protoCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -115,6 +127,11 @@ static CGRect _defaultNameBounds; // Used to store default label height
         cell.business = business;
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Yelp Client Delegate
