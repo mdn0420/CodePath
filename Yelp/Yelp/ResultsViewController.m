@@ -9,6 +9,7 @@
 #import "ResultsViewController.h"
 #import "ResultTableCell.h"
 #import "YelpClient.h"
+#import "FilterViewController.h"
 
 @interface ResultsViewController ()
 
@@ -22,6 +23,10 @@
 @implementation ResultsViewController
 
 static NSString *CellIdentifier = @"ResultTableCell";
+static ResultTableCell *_protoCell;
+
+static NSString *DEFAULT_NAME_STRING = @"Name"; // string used to calculate default height
+static CGRect _defaultNameBounds; // Used to store default label height
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,19 +54,11 @@ static NSString *CellIdentifier = @"ResultTableCell";
 }
 
 - (void)setupFilterButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"Filter" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    [button.layer setCornerRadius:2.0f];
-    [button.layer setMasksToBounds:YES];
-    [button.layer setBorderWidth:1.0f];
-    [button.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStyleBordered target:self action:@selector(onLeftButton)];
+    leftButton.tintColor = [UIColor whiteColor];
     
-    button.frame=CGRectMake(0.0, 100.0, 60.0, 28.0);
-    
-    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithCustomView:self.filterButton];
     self.navigationItem.leftBarButtonItem = leftButton;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,13 +72,36 @@ static NSString *CellIdentifier = @"ResultTableCell";
 }
 
 - (void) onLeftButton {
-    
+    FilterViewController *fvc = [[FilterViewController alloc] init];
+    [self.navigationController pushViewController:fvc animated:YES];
 }
 
 #pragma mark - Table view methods
+- (ResultTableCell *)protoCell {
+    if(!_protoCell) {
+        _protoCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    }
+    return _protoCell;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 110;
+    CGFloat result = 100; // default size
+    ResultTableCell *proto = [self protoCell];
+    if(CGRectIsEmpty(_defaultNameBounds)) {
+        _defaultNameBounds = [self getBoundsWithString:DEFAULT_NAME_STRING label:proto.nameLabel];
+    }
+    
+    ROBusiness *business = [self.client getBusinessAtIndex:indexPath.row];
+    CGRect bounds = [self getBoundsWithString:business.name label:proto.nameLabel];
+    result += bounds.size.height - _defaultNameBounds.size.height;
+    //NSLog(@"Row: %d Height: %f Width: %f", indexPath.row, bounds.size.height, bounds.size.width);
+    return result;
+}
+
+- (CGRect)getBoundsWithString:(NSString *)str label:(UILabel *)label {
+    NSDictionary *attributes = @{NSFontAttributeName: label.font};
+    return [str boundingRectWithSize:CGSizeMake(label.frame.size.width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

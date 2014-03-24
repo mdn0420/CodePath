@@ -11,6 +11,7 @@
 
 @interface ResultTableCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (nonatomic, strong) ROBusiness *business;
 
 @end

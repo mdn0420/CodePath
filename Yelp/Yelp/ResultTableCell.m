@@ -11,11 +11,9 @@
 
 @interface ResultTableCell()
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UIImageView *ratingImage;
-@property (weak, nonatomic) IBOutlet UIView *distanceLabel;
-@property (weak, nonatomic) IBOutlet UIView *costLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 
@@ -48,8 +46,23 @@
     if(self.business) {
         ROBusiness *b = self.business;
         self.nameLabel.text = b.name;
+        self.addressLabel.text = [NSString stringWithFormat:@"%@, %@", b.location[@"display_address"][0], b.location[@"neighborhoods"][0]];
         [self.profileImage setImageWithURL:[NSURL URLWithString:b.image_url]];
         [self.ratingImage setImageWithURL:[NSURL URLWithString:b.rating_img_url]];
+        self.distanceLabel.text = [NSString stringWithFormat:@"%.1fm", b.distance];
+        [self populateCategories];
+    }
+}
+
+- (void)populateCategories {
+    ROBusiness *b = self.business;
+    if(b && b.categories) {
+        NSMutableString *catString = [[NSMutableString alloc] init];
+        for(NSArray *cat in b.categories) {
+            [catString appendString:cat[0]];
+        }
+        
+        self.categoryLabel.text = catString;
     }
 }
 

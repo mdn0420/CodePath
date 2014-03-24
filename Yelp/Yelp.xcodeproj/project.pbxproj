@@ -29,6 +29,8 @@
 		75C1CF4C18DD266A00441EEA /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF4B18DD266A00441EEA /* YelpClient.m */; };
 		75C1CF5018DD29D900441EEA /* ROBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF4F18DD29D900441EEA /* ROBusiness.m */; };
 		75C1CF5318DF698B00441EEA /* ROSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF5218DF698B00441EEA /* ROSearchResults.m */; };
+		75C1CF5718DFB6F600441EEA /* FilterSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C1CF5518DFB6F600441EEA /* FilterSwitchCell.m */; };
+		75C1CF5818DFB6F600441EEA /* FilterSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75C1CF5618DFB6F600441EEA /* FilterSwitchCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,9 @@
 		75C1CF4F18DD29D900441EEA /* ROBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROBusiness.m; sourceTree = "<group>"; };
 		75C1CF5118DF698B00441EEA /* ROSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROSearchResults.h; sourceTree = "<group>"; };
 		75C1CF5218DF698B00441EEA /* ROSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROSearchResults.m; sourceTree = "<group>"; };
+		75C1CF5418DFB6F600441EEA /* FilterSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSwitchCell.h; sourceTree = "<group>"; };
+		75C1CF5518DFB6F600441EEA /* FilterSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSwitchCell.m; sourceTree = "<group>"; };
+		75C1CF5618DFB6F600441EEA /* FilterSwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterSwitchCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +203,9 @@
 				7546DD5618DBFDEE002580E1 /* ResultTableCell.h */,
 				7546DD5718DBFDEE002580E1 /* ResultTableCell.m */,
 				7546DD5918DBFE10002580E1 /* ResultTableCell.xib */,
+				75C1CF5418DFB6F600441EEA /* FilterSwitchCell.h */,
+				75C1CF5518DFB6F600441EEA /* FilterSwitchCell.m */,
+				75C1CF5618DFB6F600441EEA /* FilterSwitchCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -293,6 +301,7 @@
 				75C1CF4918DC1AB900441EEA /* FilterViewController.xib in Resources */,
 				7546DD5418DBCF12002580E1 /* ResultsViewController.xib in Resources */,
 				7546DD2B18DBCE85002580E1 /* InfoPlist.strings in Resources */,
+				75C1CF5818DFB6F600441EEA /* FilterSwitchCell.xib in Resources */,
 				7546DD3318DBCE85002580E1 /* Images.xcassets in Resources */,
 				7546DD5A18DBFE10002580E1 /* ResultTableCell.xib in Resources */,
 			);
@@ -351,6 +360,7 @@
 				75C1CF4C18DD266A00441EEA /* YelpClient.m in Sources */,
 				75C1CF5018DD29D900441EEA /* ROBusiness.m in Sources */,
 				75C1CF4818DC1AB900441EEA /* FilterViewController.m in Sources */,
+				75C1CF5718DFB6F600441EEA /* FilterSwitchCell.m in Sources */,
 				75C1CF5318DF698B00441EEA /* ROSearchResults.m in Sources */,
 				7546DD2D18DBCE85002580E1 /* main.m in Sources */,
 				7546DD5818DBFDEE002580E1 /* ResultTableCell.m in Sources */,

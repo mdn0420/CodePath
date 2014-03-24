@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *image_url;
 @property (nonatomic, strong) NSString *rating_img_url;
+@property (nonatomic, strong) NSDictionary *location;
+@property (nonatomic, strong) NSArray *categories;
 @property (nonatomic, assign) float distance;
 @property (nonatomic, assign) float rating;
 

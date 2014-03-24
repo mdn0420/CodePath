@@ -75,7 +75,7 @@ NSString * const kYelpTokenSecret = @"C5IxIuB0cy8OBF6j2aG29q_mmCI";
     
     [(MUJSONResponseSerializer *)[self responseSerializer] setResponseObjectClass:[ROSearchResults class]];
     
-    NSDictionary *parameters = @{@"term": term, @"location" : @"San Francisco"};
+    NSDictionary *parameters = @{@"term": term, @"location": @"San Francisco", @"cll": @"37.900000,-122.500000"};
     return [self GET:@"search" parameters:parameters success:^(AFHTTPRequestOperation *operation, id response) {
         _results = response;
         [self callDelegates:@"dataDownloaded"];
