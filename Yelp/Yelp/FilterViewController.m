@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableArray *sections;
 @property (nonatomic, strong) NSMutableArray *expanded;
 @property (nonatomic, strong) NSMutableArray *selection;
+@property (nonatomic, assign) BOOL dealSwitchValue; // too lazy to setup generic backing for switches
 
 @end
 
@@ -45,7 +46,7 @@ static NSString *const SelectCellIdentifier = @"FilterSelectCell";
                          @{
                            SECTION_KEY_NAME:@"Distance",
                            SECTION_KEY_TYPE:SECTION_TYPE_RADIO,
-                           SECTION_KEY_LIST:@[@[@"Auto", @"0"],
+                           SECTION_KEY_LIST:@[@[@"Auto", @"100"],
                                      @[@"2 blocks", @"50"],
                                      @[@"6 blocks", @"150"],
                                      @[@"1 mile", @"2000"],
@@ -70,7 +71,7 @@ static NSString *const SelectCellIdentifier = @"FilterSelectCell";
     leftButton.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftButton;
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStyleBordered target:self action:@selector(onCancelButton)];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStyleBordered target:self action:@selector(onSearchButton)];
     rightButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightButton;
 }
@@ -81,15 +82,26 @@ static NSString *const SelectCellIdentifier = @"FilterSelectCell";
 
 - (void)onSearchButton {
     YelpClient *client = [YelpClient instance];
-    // todo: apply filters
+    [self setupSearchParams];
     [client runSearch];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)setupSearchParams {
+    YelpClient *client = [YelpClient instance];
+    client.searchRadius = self.sections[1][SECTION_KEY_LIST][[self.selection[1] integerValue]][1];
+    client.searchSort = self.sections[2][SECTION_KEY_LIST][[self.selection[2] integerValue]][1];
+    client.searchDeals = self.dealSwitchValue;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self registerCells];
+    
+    // initialize data
+    YelpClient *client = [YelpClient instance];
+    self.dealSwitchValue = client.searchDeals;
     
     // todo: dynamically initialize
     self.expanded = [NSMutableArray arrayWithObjects:@NO, @NO, @NO,nil];
@@ -167,9 +179,17 @@ static NSString *const SelectCellIdentifier = @"FilterSelectCell";
         }
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:SwitchCellIdentifier];
+        // only really support deal switch right now
+        FilterSwitchCell *scell = (FilterSwitchCell *)cell;
+        scell.switchView.on = self.dealSwitchValue;
+        [scell.switchView addTarget:self action:@selector(didSwitchChange:) forControlEvents:UIControlEventValueChanged];
     }
     cell.nameLabel.text = section[SECTION_KEY_LIST][labelIndex][0];
     return cell;
+}
+
+-(void)didSwitchChange:(UISwitch *)sender {
+    self.dealSwitchValue = sender.on;
 }
 
 - (NSString *)typeOfSection:(NSInteger) section {

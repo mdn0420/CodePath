@@ -10,8 +10,6 @@
 
 @interface FilterSwitchCell()
 
-@property (weak, nonatomic) IBOutlet UISwitch *switchView;
-
 @end
 
 @implementation FilterSwitchCell

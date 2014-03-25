@@ -78,7 +78,7 @@ static CGRect _defaultNameBounds; // Used to store default label height
     [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void) onLeftButton {
+- (void)onLeftButton {
     FilterViewController *fvc = [[FilterViewController alloc] init];
     [self.navigationController pushViewController:fvc animated:YES];
 }

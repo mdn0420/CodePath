@@ -43,6 +43,9 @@ NSString * const kYelpTokenSecret = @"C5IxIuB0cy8OBF6j2aG29q_mmCI";
     self = [super initWithBaseURL:baseURL consumerKey:consumerKey consumerSecret:consumerSecret];
     if (self) {
         self.searchTerm = @"";
+        self.searchDeals = NO;
+        self.searchRadius = @(100);
+        self.searchSort = @(0);
         delegates = [[NSMutableSet alloc] init];
         BDBOAuthToken *token = [BDBOAuthToken tokenWithToken:accessToken secret:accessSecret expiration:nil];
         [self.requestSerializer saveAccessToken:token];
@@ -75,8 +78,12 @@ NSString * const kYelpTokenSecret = @"C5IxIuB0cy8OBF6j2aG29q_mmCI";
 - (AFHTTPRequestOperation *)runSearch {
     
     [(MUJSONResponseSerializer *)[self responseSerializer] setResponseObjectClass:[ROSearchResults class]];
-    
-    NSDictionary *parameters = @{@"term": self.searchTerm, @"location": @"San Francisco", @"cll": @"37.900000,-122.500000"};
+    NSDictionary *parameters = @{@"term": self.searchTerm,
+                                 @"location": @"San Francisco",
+                                 @"cll": @"37.900000,-122.500000",
+                                 @"deals_filter": @(self.searchDeals),
+                                 @"radius_filter": self.searchRadius,
+                                 @"sort": self.searchSort};
     return [self GET:@"search" parameters:parameters success:^(AFHTTPRequestOperation *operation, id response) {
         _results = response;
         [self callDelegates:@"dataDownloaded"];

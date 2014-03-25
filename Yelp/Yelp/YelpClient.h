@@ -21,6 +21,10 @@
 + (id)instance;
 
 @property (nonatomic, strong) NSString *searchTerm;
+@property (nonatomic, strong) NSString *searchCategory;
+@property (nonatomic, assign) BOOL searchDeals;
+@property (nonatomic, strong) NSNumber *searchRadius;
+@property (nonatomic, strong) NSNumber *searchSort;
 
 - (NSUInteger)getResultCount;
 - (ROBusiness *)getBusinessAtIndex:(NSUInteger) index;
