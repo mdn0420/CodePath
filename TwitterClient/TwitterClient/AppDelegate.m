@@ -15,18 +15,30 @@
 
 @implementation AppDelegate
 
+UINavigationController *_navController;
+TweetsViewController *_tweetsController;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [self registerNotifications];
     
+    LoginViewController *loginController = [[LoginViewController alloc] init];
+    _navController = [[UINavigationController alloc] initWithRootViewController:loginController];
+    [_navController.navigationBar setBarTintColor:[UIColor colorWithRed:121.0/255.0 green:184.0/255.0 blue:234.0/255.0 alpha:1.0]];
+	[_navController.navigationBar setTranslucent:YES];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{
+                                                           NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                           }];
+
+    
     TwitterClient *client = [TwitterClient instance];
-    if([client isLoggedIn]) {
+    if([client isAuthorized]) {
         [self showHomeTimeline];
-    } else {
-        self.window.rootViewController = [[LoginViewController alloc] init];
     }
+    
+    self.window.rootViewController = _navController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -34,10 +46,11 @@
 }
 
 - (void)showHomeTimeline {
-    UINavigationController *nvc = [[UINavigationController alloc] init];
-    TweetsViewController *home = [[TweetsViewController alloc] init];
-    [nvc pushViewController:home animated:NO];
-    self.window.rootViewController = nvc;
+    if(_tweetsController == nil) {
+        _tweetsController = [[TweetsViewController alloc] init];
+    }
+    
+    [_navController pushViewController:_tweetsController animated:YES];
 }
 
 - (void)registerNotifications {

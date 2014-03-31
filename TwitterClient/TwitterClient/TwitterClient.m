@@ -7,6 +7,8 @@
 //
 
 #import "TwitterClient.h"
+#import "Tweet.h"
+#import "User.h"
 
 @implementation NSURL (dictionaryFromQueryString)
 
@@ -35,8 +37,12 @@ NSString * const NOTIF_USER_AUTHENTICATED = @"Notif_UserAuthenticated";
 NSString * const NOTIF_TIMELINE_RECEIVED = @"Notif_TimelineReceived";
 NSString * const UD_KEY_USER = @"UD_User";
 NSString * const BASE_URL = @"https://api.twitter.com";
+NSString * const ENDPOINT_HOMELINE = @"1.1/statuses/home_timeline.json";
+NSString * const ENDPOINT_AUTH_USER = @"1.1/account/verify_credentials.json";
 
 @implementation TwitterClient
+
+static User *_currentUser = nil;
 
 + (TwitterClient *)instance {
     static TwitterClient *_instance = nil;
@@ -62,7 +68,7 @@ NSString * const BASE_URL = @"https://api.twitter.com";
 
 - (void)logout {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:NO forKey:UD_KEY_USER];
+    [defaults removeObjectForKey:UD_KEY_USER];
     [self.requestSerializer removeAccessToken];
 }
 
@@ -84,9 +90,7 @@ NSString * const BASE_URL = @"https://api.twitter.com";
             if (parameters[@"oauth_token"] && parameters[@"oauth_verifier"]) {
                 [self fetchAccessTokenWithPath:@"/oauth/access_token" method:@"POST" requestToken:[BDBOAuthToken tokenWithQueryString:url.query] success:^(BDBOAuthToken *accessToken) {
                     [self.requestSerializer saveAccessToken:accessToken];
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults setBool:YES forKey:UD_KEY_USER]; // todo: store user model in here
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_USER_AUTHENTICATED object:self];
+                    [self fetchAuthUser];
                 } failure:^(NSError *error) {
                     NSLog(@"Access token request error %@", [error debugDescription]);
                 }];
@@ -95,13 +99,57 @@ NSString * const BASE_URL = @"https://api.twitter.com";
     }
 }
 
-- (void)getAuthUser {
-    //[self GET:<#(NSString *)#> parameters:<#(NSDictionary *)#> success:<#^(AFHTTPRequestOperation *operation, id responseObject)success#> failure:<#^(AFHTTPRequestOperation *operation, NSError *error)failure#>]
+- (void)fetchHomeTimelineWithSuccess:(void (^)(NSMutableArray *tweetData))success {
+	[self GET:ENDPOINT_HOMELINE parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+		NSMutableArray *tweets = [NSMutableArray array];
+        Tweet *tweet;
+		if ([response isKindOfClass:[NSArray class]]) {
+			for (NSDictionary *tweetData in response) {
+                tweet = [[Tweet alloc] init];
+				[tweets addObject:[tweet initWithJSON:tweetData]];
+			}
+			success(tweets);
+		} else {
+            NSLog(@"Unrecognized response when fetching homeline");
+        }
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error fetching teweets - %@", error);
+    }];
+    
 }
 
-- (BOOL)isLoggedIn {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
-    return [defaults boolForKey:UD_KEY_USER];
+- (void)fetchAuthUser {
+    [self GET:ENDPOINT_AUTH_USER parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+		if ([response isKindOfClass:[NSDictionary class]]) {
+			User *userData = [[User alloc ] initWithJSON:response];
+            self.currentUser = userData;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_USER_AUTHENTICATED object:self];
+		} else {
+			// bad server response
+			NSLog(@"Unrecognized response when fetching user credentials");
+		}
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		NSLog(@"Error fetching user credentials - %@", error);
+	}];
+}
+
+- (void)setCurrentUser:(User *)currentUser {
+    _currentUser = currentUser;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:currentUser];
+    [defaults setObject:encodedObject forKey:UD_KEY_USER];
+}
+
+- (User *)currentUser {
+    if(_currentUser == nil) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSData *userData = [defaults objectForKey:UD_KEY_USER];
+        if(userData) {
+            _currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:userData];
+        }
+    }
+    
+    return _currentUser;
 }
 
 @end

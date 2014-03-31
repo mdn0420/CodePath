@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "MUJSONResponseSerializer.h"
 
-@interface User : MUJSONResponseObject
+@interface User : MUJSONResponseObject <NSCoding>
 
-@property (nonatomic, assign) NSString * screenName;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSString * screen_name;
+@property (nonatomic, strong) NSString * profile_image_url;
 
 @end

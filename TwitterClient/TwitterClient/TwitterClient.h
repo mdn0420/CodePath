@@ -7,16 +7,19 @@
 //
 
 #import "BDBOAuth1RequestOperationManager.h"
+#import "User.h"
 
 extern NSString * const NOTIF_USER_AUTHENTICATED;
 
 @interface TwitterClient : BDBOAuth1RequestOperationManager
 
+@property (nonatomic, strong) User *currentUser;
+
 + (TwitterClient *)instance;
 
 - (void)login;
 - (void)logout;
-- (BOOL)isLoggedIn;
 - (void)fetchAccessTokenWithUrl:(NSURL *)url;
+- (void)fetchHomeTimelineWithSuccess:(void (^)(NSMutableArray *tweetData))success;
 
 @end
