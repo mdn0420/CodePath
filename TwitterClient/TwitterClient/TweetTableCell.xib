@@ -13,25 +13,39 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8O-Vj-CJV">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v8O-Vj-CJV">
                         <rect key="frame" x="6" y="6" width="50" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="3IC-Hj-0tx"/>
+                            <constraint firstAttribute="height" constant="50" id="VTN-l5-ITG"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Minh Nguyen @screenname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alv-74-16K">
-                        <rect key="frame" x="64" y="6" width="247" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minh Nguyen @screenname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alv-74-16K">
+                        <rect key="frame" x="64" y="6" width="247" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Some tweet message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="236" translatesAutoresizingMaskIntoConstraints="NO" id="272-l1-Lqg">
-                        <rect key="frame" x="64" y="23" width="236" height="51"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some tweet message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="247" translatesAutoresizingMaskIntoConstraints="NO" id="272-l1-Lqg">
+                        <rect key="frame" x="64" y="23" width="247" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="alv-74-16K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="7Yh-X2-Shr"/>
+                    <constraint firstItem="v8O-Vj-CJV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="GRZ-ex-le5"/>
+                    <constraint firstAttribute="trailing" secondItem="alv-74-16K" secondAttribute="trailing" constant="9" id="NP4-zm-4P3"/>
+                    <constraint firstItem="272-l1-Lqg" firstAttribute="top" secondItem="alv-74-16K" secondAttribute="bottom" constant="2" id="Noi-jz-vLf"/>
+                    <constraint firstItem="v8O-Vj-CJV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="U4L-J3-6ld"/>
+                    <constraint firstAttribute="trailing" secondItem="272-l1-Lqg" secondAttribute="trailing" constant="9" id="WE4-mt-1kJ"/>
+                    <constraint firstItem="272-l1-Lqg" firstAttribute="leading" secondItem="v8O-Vj-CJV" secondAttribute="trailing" constant="8" id="an6-g9-uVj"/>
+                    <constraint firstItem="alv-74-16K" firstAttribute="leading" secondItem="v8O-Vj-CJV" secondAttribute="trailing" constant="8" id="iTB-kz-47C"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="nameLabel" destination="alv-74-16K" id="I9V-Lq-bC8"/>

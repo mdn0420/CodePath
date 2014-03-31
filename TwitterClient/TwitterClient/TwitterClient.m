@@ -39,6 +39,7 @@ NSString * const UD_KEY_USER = @"UD_User";
 NSString * const BASE_URL = @"https://api.twitter.com";
 NSString * const ENDPOINT_HOMELINE = @"1.1/statuses/home_timeline.json";
 NSString * const ENDPOINT_AUTH_USER = @"1.1/account/verify_credentials.json";
+NSString * const ENDPOINT_SEND_TWEET = @"1.1/statuses/update.json";
 
 @implementation TwitterClient
 
@@ -116,6 +117,16 @@ static User *_currentUser = nil;
         NSLog(@"Error fetching teweets - %@", error);
     }];
     
+}
+
+- (void)sendTweet:(NSString *)text success:(void (^)(void))success {
+    NSDictionary *params = @{@"status": text};
+    [self POST:ENDPOINT_SEND_TWEET parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Successfully sent tweet");
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error sending tweet - %@", error);
+    }];
 }
 
 - (void)fetchAuthUser {

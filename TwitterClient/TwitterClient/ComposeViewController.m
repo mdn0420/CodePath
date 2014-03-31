@@ -40,6 +40,8 @@
 	[rightButton setTintColor:[UIColor whiteColor]];
 	self.navigationItem.rightBarButtonItem = rightButton;
     
+    self.textField.delegate = self;
+    
     [self updateHeader];
 }
 
@@ -72,7 +74,20 @@
 }
 
 - (void)tweetPressed {
+    TwitterClient *client = [TwitterClient instance];
+    [client sendTweet:self.textField.text success:^{
+        [self cancelPressed];
+    }];
+}
+
+#pragma mark - Text View Delegates
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if([[textView text] length] - range.length + text.length > 140) {
+        return NO;
+    }
     
+    return YES;
 }
 
 @end

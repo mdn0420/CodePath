@@ -21,5 +21,6 @@ extern NSString * const NOTIF_USER_AUTHENTICATED;
 - (void)logout;
 - (void)fetchAccessTokenWithUrl:(NSURL *)url;
 - (void)fetchHomeTimelineWithSuccess:(void (^)(NSMutableArray *tweetData))success;
+- (void)sendTweet:(NSString *)text success:(void (^)(void))success;
 
 @end

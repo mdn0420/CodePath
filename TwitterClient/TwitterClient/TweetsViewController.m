@@ -11,6 +11,7 @@
 #import "TweetTableCell.h"
 #import "TwitterClient.h"
 #import "ComposeViewController.h"
+#import "TweetDetailViewController.h"
 
 @interface TweetsViewController ()
 
@@ -109,6 +110,19 @@ static NSString *const TweetCellIdentifier = @"TweetTableCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.tweetData ? self.tweetData.count : 0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.tweetData) {
+        Tweet *tweet = [self.tweetData objectAtIndex:indexPath.row];
+        if(tweet) {
+            TweetDetailViewController *details = [[TweetDetailViewController alloc] init];
+            details.tweet = tweet;
+            [self.navigationController pushViewController:details animated:YES];
+        } else {
+            NSLog(@"Could not find tweet to show detail view");
+        }
+    }
 }
 
 @end
