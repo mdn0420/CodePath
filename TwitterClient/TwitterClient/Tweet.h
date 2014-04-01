@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSDictionary * current_user_retweet;
 
 @property (nonatomic, readonly) NSString * timeString;
+@property (nonatomic, readonly) NSString * shortTimeString;
 
 
 + (NSDateFormatter *)longDateFormatter;

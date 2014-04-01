@@ -22,8 +22,11 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minh Nguyen @screenname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alv-74-16K">
-                        <rect key="frame" x="64" y="6" width="247" height="15"/>
+                        <rect key="frame" x="64" y="6" width="202" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="202" id="5Mx-KE-40a"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -35,11 +38,21 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/23/14" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="54" translatesAutoresizingMaskIntoConstraints="NO" id="Fuq-tO-DVF">
+                        <rect key="frame" x="257" y="7" width="54" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.48594599184782605" green="0.48594599184782605" blue="0.48594599184782605" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Fuq-tO-DVF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="0Nr-dF-j8Y"/>
+                    <constraint firstItem="Fuq-tO-DVF" firstAttribute="leading" secondItem="alv-74-16K" secondAttribute="trailing" constant="-9" id="0oX-ct-ieh"/>
                     <constraint firstItem="alv-74-16K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="7Yh-X2-Shr"/>
+                    <constraint firstAttribute="trailing" secondItem="Fuq-tO-DVF" secondAttribute="trailing" constant="9" id="EL1-sQ-B4G"/>
                     <constraint firstItem="v8O-Vj-CJV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="GRZ-ex-le5"/>
-                    <constraint firstAttribute="trailing" secondItem="alv-74-16K" secondAttribute="trailing" constant="9" id="NP4-zm-4P3"/>
                     <constraint firstItem="272-l1-Lqg" firstAttribute="top" secondItem="alv-74-16K" secondAttribute="bottom" constant="2" id="Noi-jz-vLf"/>
                     <constraint firstItem="v8O-Vj-CJV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="U4L-J3-6ld"/>
                     <constraint firstAttribute="trailing" secondItem="272-l1-Lqg" secondAttribute="trailing" constant="9" id="WE4-mt-1kJ"/>
@@ -50,6 +63,7 @@
             <connections>
                 <outlet property="nameLabel" destination="alv-74-16K" id="I9V-Lq-bC8"/>
                 <outlet property="profileImage" destination="v8O-Vj-CJV" id="4Dg-59-mBq"/>
+                <outlet property="timeLabel" destination="Fuq-tO-DVF" id="ktC-iY-ZhC"/>
                 <outlet property="tweetLabel" destination="272-l1-Lqg" id="lIq-iv-1NB"/>
             </connections>
         </tableViewCell>

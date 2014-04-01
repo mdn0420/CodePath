@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end
 
@@ -49,6 +50,7 @@ Tweet *_tweet;
         [name setAttributes:attributes range:NSMakeRange(_tweet.user.name.length, _tweet.user.screen_name.length+2)];
         self.nameLabel.attributedText = name;
         [self.profileImage setImageWithURL: [NSURL URLWithString:_tweet.user.profile_image_url]];
+        self.timeLabel.text = _tweet.shortTimeString;
     }
 }
 

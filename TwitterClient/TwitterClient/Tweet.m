@@ -7,6 +7,7 @@
 //
 
 #import "Tweet.h"
+#import "MHPrettyDate.h"
 
 @interface Tweet ()
 
@@ -36,11 +37,22 @@
 	return longDateFormatter;
 }
 
-- (NSString *)timeString {
+- (NSDate *)getDateObject {
     if(self.createdDate == nil) {
         self.createdDate = [[Tweet longDateFormatter] dateFromString:self.created_at];
     }
-    return [NSDateFormatter localizedStringFromDate:self.createdDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+    
+    return self.createdDate;
+}
+
+- (NSString *)timeString {
+    NSDate *date = [self getDateObject];
+    return [NSDateFormatter localizedStringFromDate:date dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+}
+
+- (NSString *)shortTimeString {
+    NSDate *date = [self getDateObject];
+    return [MHPrettyDate prettyDateFromDate:date withFormat:MHPrettyDateShortRelativeTime];
 }
 
 @end
