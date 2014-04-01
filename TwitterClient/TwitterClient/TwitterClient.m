@@ -42,6 +42,8 @@ NSString * const ENDPOINT_AUTH_USER = @"1.1/account/verify_credentials.json";
 NSString * const ENDPOINT_SEND_TWEET = @"1.1/statuses/update.json";
 NSString * const ENDPOINT_FAVORITE_TWEET = @"1.1/favorites/create.json";
 NSString * const ENDPOINT_UNFAVORITE_TWEET = @"1.1/favorites/destroy.json";
+NSString * const ENDPOINT_RETWEET_FORMAT = @"1.1/statuses/retweet/%@.json";
+NSString * const ENDPOINT_DESTROY_FORMAT = @"1.1/statuses/destroy/%@.json";
 
 @implementation TwitterClient
 
@@ -159,8 +161,11 @@ static User *_currentUser = nil;
 
 #pragma mark - Tweet methods
 
-- (void)sendTweet:(NSString *)text success:(void (^)(void))success {
-    NSDictionary *params = @{@"status": text};
+- (void)sendTweet:(NSString *)text reply:(Tweet *)replyTweet success:(void (^)(void))success {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"status": text}];
+    if(replyTweet) {
+        [params setValue:replyTweet.tweetId forKey:@"in_reply_to_status_id"];
+    }
     [self POST:ENDPOINT_SEND_TWEET parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Successfully sent tweet");
         success();
@@ -177,6 +182,26 @@ static User *_currentUser = nil;
         success();
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error favorited or unfavorited tweet - %@", error);
+    }];
+}
+
+- (void)retweetWithId:(NSNumber *)tweetId success:(void (^)(void))success {
+    NSString *endpoint = [NSString stringWithFormat:ENDPOINT_RETWEET_FORMAT, tweetId];
+    [self POST:endpoint parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Successfully retweeted tweet");
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error retweeting tweet - %@", error);
+    }];
+}
+
+- (void)destroyTweetWithId:(NSNumber *)tweetId success:(void (^)(void))success {
+    NSString *endpoint = [NSString stringWithFormat:ENDPOINT_DESTROY_FORMAT, tweetId];
+    [self POST:endpoint parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Successfully deleted tweet");
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error deleting tweet - %@", error);
     }];
 }
 

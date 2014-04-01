@@ -9,6 +9,7 @@
 #import "TweetDetailViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "TwitterClient.h"
+#import "ComposeViewController.h"
 
 @interface TweetDetailViewController ()
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 
 - (IBAction)replyPressed:(id)sender;
 - (IBAction)retweetPressed:(id)sender;
@@ -67,6 +69,7 @@
         self.statusLabel.text = tweet.text;
         self.timeLabel.text = tweet.timeString;
         self.favoriteButton.selected = tweet.favorited;
+        self.retweetButton.selected = tweet.retweeted;
     } else {
         NSLog(@"Invalid data for TweetDetailViewController");
     }
@@ -83,13 +86,22 @@
 }
 
 - (void)replyPressed {
-    
+    ComposeViewController *compose = [[ComposeViewController alloc] init];
+    compose.replyTweet = self.tweet;
+    [self.navigationController pushViewController:compose animated:YES];
 }
 
 - (IBAction)replyPressed:(id)sender {
+    [self replyPressed];
 }
 
 - (IBAction)retweetPressed:(id)sender {
+    if(!self.tweet.retweeted) {
+        TwitterClient *client = [TwitterClient instance];
+        [client retweetWithId:self.tweet.tweetId success:^{
+            self.retweetButton.selected = YES;
+        }];
+    }
 }
 
 - (IBAction)favoritePressed:(id)sender {

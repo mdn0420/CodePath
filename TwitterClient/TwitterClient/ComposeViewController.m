@@ -47,7 +47,17 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if(self.replyTweet) {
+        self.textField.text = [NSString stringWithFormat:@"@%@ ", self.replyTweet.user.screen_name];
+    }
+    
     [self.textField becomeFirstResponder];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.replyTweet = nil;
 }
 
 - (void)updateHeader {
@@ -75,7 +85,7 @@
 
 - (void)tweetPressed {
     TwitterClient *client = [TwitterClient instance];
-    [client sendTweet:self.textField.text success:^{
+    [client sendTweet:self.textField.text reply:self.replyTweet success:^{
         [self cancelPressed];
     }];
 }

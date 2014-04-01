@@ -20,8 +20,7 @@
 {
     if(self = [super init])
     {
-        // There is no need to map all properties, only those which you want to have diffrent names;
-        self.propertyMap = @{@"id":         @"tweetId"};
+        self.propertyMap = @{@"id": @"tweetId"};
     }
     return self;
 }

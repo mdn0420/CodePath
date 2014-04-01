@@ -8,6 +8,7 @@
 
 #import "BDBOAuth1RequestOperationManager.h"
 #import "User.h"
+#import "Tweet.h"
 
 extern NSString * const NOTIF_USER_AUTHENTICATED;
 
@@ -21,7 +22,9 @@ extern NSString * const NOTIF_USER_AUTHENTICATED;
 - (void)logout;
 - (void)fetchAccessTokenWithUrl:(NSURL *)url;
 - (void)fetchHomeTimelineWithSuccess:(void (^)(NSMutableArray *tweetData))success;
-- (void)sendTweet:(NSString *)text success:(void (^)(void))success;
+- (void)sendTweet:(NSString *)text reply:(Tweet *)replyTweet success:(void (^)(void))success;
 - (void)favoriteTweetWithId:(NSNumber *)tweetId toggle:(BOOL)value success:(void (^)(void))success;
+- (void)retweetWithId:(NSNumber *)tweetId success:(void (^)(void))success;
+- (void)destroyTweetWithId:(NSNumber *)tweetId success:(void (^)(void))success;
 
 @end

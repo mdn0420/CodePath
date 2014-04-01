@@ -11,6 +11,7 @@
 		752CCB1A18EA8637004DCB71 /* favorite_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 752CCB1918EA8637004DCB71 /* favorite_on.png */; };
 		752CCB1D18EA865C004DCB71 /* reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 752CCB1B18EA865C004DCB71 /* reply.png */; };
 		752CCB1E18EA865C004DCB71 /* retweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 752CCB1C18EA865C004DCB71 /* retweet.png */; };
+		752CCB2018EA91E0004DCB71 /* retweet_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 752CCB1F18EA91E0004DCB71 /* retweet_on.png */; };
 		758331F118E3FE6100A8EBB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758331F018E3FE6100A8EBB9 /* Foundation.framework */; };
 		758331F318E3FE6100A8EBB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758331F218E3FE6100A8EBB9 /* CoreGraphics.framework */; };
 		758331F518E3FE6100A8EBB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758331F418E3FE6100A8EBB9 /* UIKit.framework */; };
@@ -55,6 +56,7 @@
 		752CCB1918EA8637004DCB71 /* favorite_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_on.png; sourceTree = "<group>"; };
 		752CCB1B18EA865C004DCB71 /* reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reply.png; sourceTree = "<group>"; };
 		752CCB1C18EA865C004DCB71 /* retweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet.png; sourceTree = "<group>"; };
+		752CCB1F18EA91E0004DCB71 /* retweet_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet_on.png; sourceTree = "<group>"; };
 		758331ED18E3FE6100A8EBB9 /* TwitterClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		758331F018E3FE6100A8EBB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		758331F218E3FE6100A8EBB9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -251,6 +253,7 @@
 			children = (
 				752CCB1918EA8637004DCB71 /* favorite_on.png */,
 				752CCB1718EA858F004DCB71 /* favorite.png */,
+				752CCB1F18EA91E0004DCB71 /* retweet_on.png */,
 				752CCB1B18EA865C004DCB71 /* reply.png */,
 				752CCB1C18EA865C004DCB71 /* retweet.png */,
 			);
@@ -335,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7583324718E94C1100A8EBB9 /* TweetDetailViewController.xib in Resources */,
+				752CCB2018EA91E0004DCB71 /* retweet_on.png in Resources */,
 				752CCB1A18EA8637004DCB71 /* favorite_on.png in Resources */,
 				7583323618E5195B00A8EBB9 /* LoginViewController.xib in Resources */,
 				7583324218E910BB00A8EBB9 /* ComposeViewController.xib in Resources */,
