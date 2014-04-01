@@ -16,6 +16,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+
+- (IBAction)replyPressed:(id)sender;
+- (IBAction)retweetPressed:(id)sender;
+- (IBAction)favoritePressed:(id)sender;
+
 
 @end
 
@@ -58,7 +64,8 @@
         self.screenNameLabel.text = screenName;
         [self.profileImage setImageWithURL: [NSURL URLWithString:user.profile_image_url]];
         self.statusLabel.text = tweet.text;
-        
+        self.timeLabel.text = tweet.timeString;
+        self.favoriteButton.selected = tweet.favorited;
     } else {
         NSLog(@"Invalid data for TweetDetailViewController");
     }
@@ -78,4 +85,13 @@
     
 }
 
+- (IBAction)replyPressed:(id)sender {
+}
+
+- (IBAction)retweetPressed:(id)sender {
+}
+
+- (IBAction)favoritePressed:(id)sender {
+    self.favoriteButton.selected = !self.favoriteButton.selected;
+}
 @end

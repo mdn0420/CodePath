@@ -14,5 +14,12 @@
 
 @property (nonatomic, strong) NSString * text;
 @property (nonatomic, strong) User * user;
+@property (nonatomic, strong) NSString * created_at;
+@property (nonatomic, assign) BOOL favorited;
+
+@property (nonatomic, readonly) NSString * timeString;
+
+
++ (NSDateFormatter *)longDateFormatter;
 
 @end
