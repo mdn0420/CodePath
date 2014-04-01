@@ -8,6 +8,7 @@
 
 #import "TweetDetailViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "TwitterClient.h"
 
 @interface TweetDetailViewController ()
 
@@ -93,5 +94,9 @@
 
 - (IBAction)favoritePressed:(id)sender {
     self.favoriteButton.selected = !self.favoriteButton.selected;
+    TwitterClient *client = [TwitterClient instance];
+    [client favoriteTweetWithId:self.tweet.tweetId toggle:self.favoriteButton.selected success:^{
+        self.tweet.favorited = self.favoriteButton.selected;
+    }];
 }
 @end

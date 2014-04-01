@@ -40,6 +40,8 @@ NSString * const BASE_URL = @"https://api.twitter.com";
 NSString * const ENDPOINT_HOMELINE = @"1.1/statuses/home_timeline.json";
 NSString * const ENDPOINT_AUTH_USER = @"1.1/account/verify_credentials.json";
 NSString * const ENDPOINT_SEND_TWEET = @"1.1/statuses/update.json";
+NSString * const ENDPOINT_FAVORITE_TWEET = @"1.1/favorites/create.json";
+NSString * const ENDPOINT_UNFAVORITE_TWEET = @"1.1/favorites/destroy.json";
 
 @implementation TwitterClient
 
@@ -119,15 +121,7 @@ static User *_currentUser = nil;
     
 }
 
-- (void)sendTweet:(NSString *)text success:(void (^)(void))success {
-    NSDictionary *params = @{@"status": text};
-    [self POST:ENDPOINT_SEND_TWEET parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Successfully sent tweet");
-        success();
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error sending tweet - %@", error);
-    }];
-}
+#pragma mark - User methods
 
 - (void)fetchAuthUser {
     [self GET:ENDPOINT_AUTH_USER parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
@@ -161,6 +155,29 @@ static User *_currentUser = nil;
     }
     
     return _currentUser;
+}
+
+#pragma mark - Tweet methods
+
+- (void)sendTweet:(NSString *)text success:(void (^)(void))success {
+    NSDictionary *params = @{@"status": text};
+    [self POST:ENDPOINT_SEND_TWEET parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Successfully sent tweet");
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error sending tweet - %@", error);
+    }];
+}
+
+- (void)favoriteTweetWithId:(NSNumber *)tweetId toggle:(BOOL)value success:(void (^)(void))success {
+    NSString *endpoint = value ? ENDPOINT_FAVORITE_TWEET : ENDPOINT_UNFAVORITE_TWEET;
+    NSDictionary *params = @{@"id": tweetId};
+    [self POST:endpoint parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Successfully favorited or unfavorited tweet");
+        success();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error favorited or unfavorited tweet - %@", error);
+    }];
 }
 
 @end
