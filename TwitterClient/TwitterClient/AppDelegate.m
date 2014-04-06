@@ -62,11 +62,18 @@ TweetsViewController *_tweetsController;
 
 - (void)registerNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUserAuthenticate) name:NOTIF_USER_AUTHENTICATED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popToHomeline) name:NOTIF_POP_ROOT_VIEW object:nil];
 }
 
 - (void)didUserAuthenticate {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIF_USER_AUTHENTICATED object:nil];
     [self showHomeTimeline];
+}
+
+- (void)popToHomeline {
+    if(_tweetsController != nil) {
+        [_navController popToViewController:_tweetsController animated:NO];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

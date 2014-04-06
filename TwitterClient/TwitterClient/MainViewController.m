@@ -37,10 +37,10 @@ CGPoint offScreen;
     [self.contentView addSubview:self.mainController.view];
     [self.menuView addSubview:self.menuController.view];
     contentOrigCenter = CGPointMake(self.view.center.x, self.contentView.center.y);
-    offScreen = CGPointMake(self.contentView.center.x + self.contentView.frame.size.width, self.contentView.center.y);
+    offScreen = CGPointMake(self.contentView.center.x + self.contentView.frame.size.width - 10, self.contentView.center.y);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushViewController:) name:NOTIF_PUSH_VIEW object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popRootViewController:) name:NOTIF_POP_ROOT_VIEW object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popRootViewController) name:NOTIF_POP_ROOT_VIEW object:nil];
     
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPan:)];
     [self.view addGestureRecognizer:panGesture];
@@ -111,10 +111,7 @@ CGPoint offScreen;
     }
 }
 
-- (void)popRootViewController:(NSNotification *)note {
+- (void)popRootViewController {
     [self closeMenu];
-    if (self.mainController) {
-        [((UINavigationController *)self.mainController) popToRootViewControllerAnimated:NO];
-    }
 }
 @end

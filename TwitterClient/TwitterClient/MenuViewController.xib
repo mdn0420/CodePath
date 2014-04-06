@@ -57,7 +57,6 @@
                     </state>
                     <connections>
                         <action selector="onViewHomeline:" destination="-1" eventType="touchUpInside" id="QwL-z5-zlg"/>
-                        <action selector="onViewProfile:" destination="-1" eventType="touchUpInside" id="1qz-iQ-2gK"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbF-hj-NgC">
