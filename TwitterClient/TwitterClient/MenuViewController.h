@@ -11,7 +11,4 @@
 
 @interface MenuViewController : UIViewController
 
-// ideally use a delegate instead of direct reference
-@property (nonatomic, weak) MainViewController * mainController;
-
 @end

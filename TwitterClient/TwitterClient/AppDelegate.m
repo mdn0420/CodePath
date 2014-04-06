@@ -43,7 +43,6 @@ TweetsViewController *_tweetsController;
     MainViewController *main = [[MainViewController alloc] init];
     MenuViewController *menu = [[MenuViewController alloc] init];
     main.mainController = _navController;
-    menu.mainController = main;
     main.menuController = menu;
     
     self.window.rootViewController = main;

@@ -14,6 +14,9 @@
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * screen_name;
 @property (nonatomic, strong) NSString * profile_image_url;
+@property (nonatomic, strong) NSNumber * followers_count;
+@property (nonatomic, strong) NSNumber * friends_count;
+@property (nonatomic, strong) NSNumber * statuses_count;
 @property (nonatomic, readonly) NSString * screenNameFormatted;
 
 @end

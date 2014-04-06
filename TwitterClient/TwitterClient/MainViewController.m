@@ -10,10 +10,11 @@
 
 @interface MainViewController ()
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender;
-
+- (BOOL)isMenuClosed;
 @end
 
 NSString * const NOTIF_PUSH_VIEW = @"Notif_PushView";
+NSString * const NOTIF_POP_ROOT_VIEW = @"Notif_PopRootView";
 NSString * const NOTIF_PARAM_KEY_VIEW = @"Notif_Param_View";
 
 @implementation MainViewController
@@ -33,14 +34,16 @@ CGPoint offScreen;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     [self.contentView addSubview:self.mainController.view];
     [self.menuView addSubview:self.menuController.view];
-    contentOrigCenter = self.contentView.center;
-    offScreen = self.contentView.center;
-    offScreen.x += self.contentView.frame.size.width;
+    contentOrigCenter = CGPointMake(self.view.center.x, self.contentView.center.y);
+    offScreen = CGPointMake(self.contentView.center.x + self.contentView.frame.size.width, self.contentView.center.y);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushViewController:) name:NOTIF_PUSH_VIEW object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popRootViewController:) name:NOTIF_POP_ROOT_VIEW object:nil];
+    
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPan:)];
+    [self.view addGestureRecognizer:panGesture];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,15 +53,25 @@ CGPoint offScreen;
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)sender {
-    CGPoint point = [sender locationInView:self.view];
+    CGPoint touchPoint = [sender locationInView:self.view];
     CGPoint velocity = [sender velocityInView:self.view];
-    point.y = contentOrigCenter.y;
-    sender.view.center = point;
+    CGPoint point = CGPointMake(touchPoint.x + self.contentView.frame.size.width/2, contentOrigCenter.y);
+    if(point.x < contentOrigCenter.x) {
+        point.x = contentOrigCenter.x;
+    }
+    
+    
     
     if(sender.state == UIGestureRecognizerStateBegan) {
-        
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.contentView.center = point;
+        } completion:^(BOOL finished) {
+            
+        }];
     } else if(sender.state == UIGestureRecognizerStateChanged) {
-        
+        if(![self isMenuClosed]) {
+            self.contentView.center = point;
+        }
     } else if(sender.state == UIGestureRecognizerStateEnded) {
         if(velocity.x < 0) {
             [self closeMenu];
@@ -66,6 +79,10 @@ CGPoint offScreen;
             [self openMenu];
         }
     }
+}
+
+- (BOOL)isMenuClosed {
+    return CGPointEqualToPoint(offScreen, self.contentView.center);
 }
 
 - (void)openMenu {
@@ -91,6 +108,13 @@ CGPoint offScreen;
         if (viewController) {
             [((UINavigationController *)self.mainController) pushViewController:viewController animated:YES];
         }
+    }
+}
+
+- (void)popRootViewController:(NSNotification *)note {
+    [self closeMenu];
+    if (self.mainController) {
+        [((UINavigationController *)self.mainController) popToRootViewControllerAnimated:NO];
     }
 }
 @end

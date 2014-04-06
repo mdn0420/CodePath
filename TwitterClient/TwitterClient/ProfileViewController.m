@@ -49,6 +49,9 @@
         self.nameLabel.text = u.name;
         self.screenNameLabel.text = u.screenNameFormatted;
         [self.profileImage setImageWithURL: [NSURL URLWithString:u.profile_image_url]];
+        self.numTweetsLabel.text = [NSString stringWithFormat:@"%@", u.statuses_count];
+        self.numFollowersLabel.text = [NSString stringWithFormat:@"%@", u.followers_count];
+        self.numFollowingLabel.text = [NSString stringWithFormat:@"%@", u.friends_count];
     }
 }
 

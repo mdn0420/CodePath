@@ -18,6 +18,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 
 - (IBAction)onViewProfile:(id)sender;
+- (IBAction)onViewHomeline:(id)sender;
+- (IBAction)onViewMentions:(id)sender;
+
+
 @end
 
 @implementation MenuViewController
@@ -61,5 +65,12 @@
     NSDictionary *notifParams = [NSDictionary dictionaryWithObject:profileView forKey:NOTIF_PARAM_KEY_VIEW];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_PUSH_VIEW object:self userInfo:notifParams];
+}
+
+- (IBAction)onViewHomeline:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_POP_ROOT_VIEW object:self];
+}
+
+- (IBAction)onViewMentions:(id)sender {
 }
 @end

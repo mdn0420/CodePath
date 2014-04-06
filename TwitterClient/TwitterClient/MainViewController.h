@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString * const NOTIF_POP_ROOT_VIEW;
 extern NSString * const NOTIF_PUSH_VIEW;
 extern NSString * const NOTIF_PARAM_KEY_VIEW;
 
