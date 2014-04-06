@@ -113,6 +113,7 @@ static NSString *const TweetCellIdentifier = @"TweetTableCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(self.tweetData) {
         Tweet *tweet = [self.tweetData objectAtIndex:indexPath.row];
         if(tweet) {

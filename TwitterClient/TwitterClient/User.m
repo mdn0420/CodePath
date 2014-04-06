@@ -25,5 +25,9 @@
     return self;
 }
 
+- (NSString *)screenNameFormatted {
+    return [NSString stringWithFormat:@"@%@", self.screen_name];
+}
+
 
 @end

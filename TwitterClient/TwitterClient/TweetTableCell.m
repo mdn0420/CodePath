@@ -8,6 +8,9 @@
 
 #import "TweetTableCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "ProfileViewController.h"
+#import "TwitterClient.h"
+#import "MainViewController.h"
 
 @interface TweetTableCell ()
 
@@ -15,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+- (IBAction)onImageTap:(UITapGestureRecognizer *)sender;
 
 @end
 
@@ -25,6 +29,9 @@ Tweet *_tweet;
 - (void)awakeFromNib
 {
     // Initialization code
+    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onImageTap:)];
+    [self.profileImage addGestureRecognizer:tap];
+    tap.numberOfTapsRequired = 1;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -32,6 +39,10 @@ Tweet *_tweet;
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
 
 - (void)setTweet:(Tweet *)tweet {
@@ -54,4 +65,11 @@ Tweet *_tweet;
     }
 }
 
+- (IBAction)onImageTap:(UITapGestureRecognizer *)sender {
+    ProfileViewController *profileView = [[ProfileViewController alloc] init];
+    profileView.user = _tweet.user;
+    NSDictionary *notifParams = [NSDictionary dictionaryWithObject:profileView forKey:NOTIF_PARAM_KEY_VIEW];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_PUSH_VIEW object:self userInfo:notifParams];
+}
 @end

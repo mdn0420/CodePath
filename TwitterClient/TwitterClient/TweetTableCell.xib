@@ -13,9 +13,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v8O-Vj-CJV">
+                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v8O-Vj-CJV">
                         <rect key="frame" x="6" y="6" width="50" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="3IC-Hj-0tx"/>
                             <constraint firstAttribute="height" constant="50" id="VTN-l5-ITG"/>

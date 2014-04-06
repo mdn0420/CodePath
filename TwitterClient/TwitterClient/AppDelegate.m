@@ -10,6 +10,8 @@
 #import "LoginViewController.h"
 #import "TweetsViewController.h"
 #import "TwitterClient.h"
+#import "MainViewController.h"
+#import "MenuViewController.h"
 
 
 
@@ -38,7 +40,13 @@ TweetsViewController *_tweetsController;
         [self showHomeTimeline];
     }
     
-    self.window.rootViewController = _navController;
+    MainViewController *main = [[MainViewController alloc] init];
+    MenuViewController *menu = [[MenuViewController alloc] init];
+    main.mainController = _navController;
+    menu.mainController = main;
+    main.menuController = menu;
+    
+    self.window.rootViewController = main;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
