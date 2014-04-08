@@ -12,7 +12,7 @@
 #import "TwitterClient.h"
 #import "MainViewController.h"
 #import "MenuViewController.h"
-
+#import "HomeTweetFetcher.h"
 
 
 @implementation AppDelegate
@@ -56,6 +56,9 @@ TweetsViewController *_tweetsController;
     if(_tweetsController == nil) {
         _tweetsController = [[TweetsViewController alloc] init];
     }
+    
+    // default tweet fetcher
+    _tweetsController.tweetFetcher = [[HomeTweetFetcher alloc] init];
     
     [_navController pushViewController:_tweetsController animated:YES];
 }

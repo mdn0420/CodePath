@@ -11,6 +11,14 @@
 #import "Tweet.h"
 
 extern NSString * const NOTIF_USER_AUTHENTICATED;
+extern NSString * const ENDPOINT_HOMELINE;
+extern NSString * const ENDPOINT_MENTIONS_TIMELINE;
+
+@protocol TweetFetcher <NSObject>
+
+- (void)fetchTweetsWithSuccess:(void (^)(NSMutableArray *tweetData))success;
+
+@end
 
 @interface TwitterClient : BDBOAuth1RequestOperationManager
 
@@ -21,7 +29,7 @@ extern NSString * const NOTIF_USER_AUTHENTICATED;
 - (void)login;
 - (void)logout;
 - (void)fetchAccessTokenWithUrl:(NSURL *)url;
-- (void)fetchHomeTimelineWithSuccess:(void (^)(NSMutableArray *tweetData))success;
+- (void)fetchTweetsWithSuccess:(void (^)(NSMutableArray *tweetData))success url:(NSString *)url;
 - (void)sendTweet:(NSString *)text reply:(Tweet *)replyTweet success:(void (^)(void))success;
 - (void)favoriteTweetWithId:(NSNumber *)tweetId toggle:(BOOL)value success:(void (^)(void))success;
 - (void)retweetWithId:(NSNumber *)tweetId success:(void (^)(void))success;

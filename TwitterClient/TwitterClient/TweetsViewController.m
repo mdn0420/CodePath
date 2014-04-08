@@ -52,8 +52,10 @@ static NSString *const TweetCellIdentifier = @"TweetTableCell";
 	[rightButton setTintColor:[UIColor whiteColor]];
 	self.navigationItem.rightBarButtonItem = rightButton;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFetcher:) name:@"updateFetcher" object:nil];
+    
     [self setupRefresh];
-    [self fetchHomeline:nil];
+    [self fetchTweets:nil];
 }
 
 - (void)signOutPressed {
@@ -76,18 +78,19 @@ static NSString *const TweetCellIdentifier = @"TweetTableCell";
 }
 
 - (void)handleRefresh:(id)sender {
-    [self fetchHomeline:sender];
+    [self fetchTweets:sender];
 }
 
-- (void)fetchHomeline:(UIRefreshControl *)refresh {
-    TwitterClient *client = [TwitterClient instance];
-    [client fetchHomeTimelineWithSuccess:^(NSMutableArray *tweetData) {
-        if(refresh) {
-            [refresh endRefreshing];
-        }
-        self.tweetData = tweetData;
-        [self.tableView reloadData];
-    }];
+- (void)fetchTweets:(UIRefreshControl *)refresh {
+    if(self.tweetFetcher) {
+        [self.tweetFetcher fetchTweetsWithSuccess:^(NSMutableArray *tweetData) {
+            if(refresh) {
+                [refresh endRefreshing];
+            }
+            self.tweetData = tweetData;
+            [self.tableView reloadData];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,6 +126,14 @@ static NSString *const TweetCellIdentifier = @"TweetTableCell";
         } else {
             NSLog(@"Could not find tweet to show detail view");
         }
+    }
+}
+
+- (void)updateFetcher:(NSNotification *)note {
+    id <TweetFetcher> fetcher = [[note userInfo] valueForKey:@"updateFetcherParam"];
+    if(fetcher) {
+        self.tweetFetcher = fetcher;
+        [self fetchTweets:nil];
     }
 }
 

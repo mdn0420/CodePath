@@ -38,6 +38,7 @@ NSString * const NOTIF_TIMELINE_RECEIVED = @"Notif_TimelineReceived";
 NSString * const UD_KEY_USER = @"UD_User";
 NSString * const BASE_URL = @"https://api.twitter.com";
 NSString * const ENDPOINT_HOMELINE = @"1.1/statuses/home_timeline.json";
+NSString * const ENDPOINT_MENTIONS_TIMELINE = @"1.1/statuses/mentions_timeline.json";
 NSString * const ENDPOINT_AUTH_USER = @"1.1/account/verify_credentials.json";
 NSString * const ENDPOINT_SEND_TWEET = @"1.1/statuses/update.json";
 NSString * const ENDPOINT_FAVORITE_TWEET = @"1.1/favorites/create.json";
@@ -104,8 +105,8 @@ static User *_currentUser = nil;
     }
 }
 
-- (void)fetchHomeTimelineWithSuccess:(void (^)(NSMutableArray *tweetData))success {
-	[self GET:ENDPOINT_HOMELINE parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+- (void)fetchTweetsWithSuccess:(void (^)(NSMutableArray *tweetData))success url:(NSString *)url {
+	[self GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
 		NSMutableArray *tweets = [NSMutableArray array];
         Tweet *tweet;
 		if ([response isKindOfClass:[NSArray class]]) {

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TwitterClient.h"
 
 @interface TweetsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) id <TweetFetcher> tweetFetcher;
 
 @end

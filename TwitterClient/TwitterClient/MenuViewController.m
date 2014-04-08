@@ -10,6 +10,8 @@
 #import "TwitterClient.h"
 #import "UIImageView+AFNetworking.h"
 #import "ProfileViewController.h"
+#import "HomeTweetFetcher.h"
+#import "MentionsTweetFetcher.h"
 
 @interface MenuViewController ()
 
@@ -63,14 +65,20 @@
     TwitterClient *client = [TwitterClient instance];
     profileView.user = client.currentUser;
     NSDictionary *notifParams = [NSDictionary dictionaryWithObject:profileView forKey:NOTIF_PARAM_KEY_VIEW];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_PUSH_VIEW object:self userInfo:notifParams];
 }
 
 - (IBAction)onViewHomeline:(id)sender {
+    HomeTweetFetcher *fetcher = [[HomeTweetFetcher alloc] init];
+    NSDictionary *notifParams = [NSDictionary dictionaryWithObject:fetcher forKey:@"updateFetcherParam"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateFetcher" object:self userInfo:notifParams];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_POP_ROOT_VIEW object:self];
 }
 
 - (IBAction)onViewMentions:(id)sender {
+    MentionsTweetFetcher *fetcher = [[MentionsTweetFetcher alloc] init];
+    NSDictionary *notifParams = [NSDictionary dictionaryWithObject:fetcher forKey:@"updateFetcherParam"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateFetcher" object:self userInfo:notifParams];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_POP_ROOT_VIEW object:self];
 }
 @end

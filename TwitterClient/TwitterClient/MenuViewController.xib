@@ -69,7 +69,6 @@
                     </state>
                     <connections>
                         <action selector="onViewMentions:" destination="-1" eventType="touchUpInside" id="Pt9-l2-eBH"/>
-                        <action selector="onViewProfile:" destination="-1" eventType="touchUpInside" id="JXv-UQ-AOg"/>
                     </connections>
                 </button>
             </subviews>
